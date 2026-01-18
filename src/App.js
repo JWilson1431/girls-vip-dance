@@ -75,7 +75,7 @@ export default function DaddyDaughterDance() {
 
     try {
       const googleSheetUrl = process.env.REACT_APP_GOOGLE_SHEET_URL;
-      const googleResponse = await fetch(googleSheetUrl, {
+      await fetch(googleSheetUrl, {
         method: 'POST',
         mode: 'no-cors',
         headers: {
@@ -340,7 +340,7 @@ export default function DaddyDaughterDance() {
               </div>
 
               <div className="form-group">
-                <label>VIP Guest Name (Dad, Grandpa, Uncle, etc.) *</label>
+                <label>VIP Guest Name *</label>
                 <input
                   type="text"
                   value={formData.vipGuest}
@@ -388,7 +388,19 @@ export default function DaddyDaughterDance() {
                 <p className="price-label">
                   Your Ticket Price: <span className="price-amount">{ticketPrice}</span>
                 </p>
-                <p className="price-note">Please bring payment on the day of the event</p>
+                <p className="price-note">
+                  {formData.paymentMethod === "Cash" || formData.paymentMethod === "Check" ? (
+                    <>
+                      Please send {formData.paymentMethod} to the teacher with your child's name, "VIP Dance" notation, and parent phone number.
+                    </>
+                  ) : formData.paymentMethod === "Venmo" ? (
+                    <>
+                      Please pay via <a href="https://venmo.com/Amosland-HomeandSchool" target="_blank" rel="noopener noreferrer">Venmo</a>.
+                    </>
+                  ) : (
+                    "Please select a payment method."
+                  )}
+                </p>
               </div>
 
               <div className="form-group">
@@ -428,8 +440,15 @@ export default function DaddyDaughterDance() {
       </section>
 
       <footer className="footer">
-        <p>Questions? Contact the PTO</p>
-        <p className="footer-tagline">We can't wait to see you at the Enchanted Forest! 🍄✨</p>
+        <p>
+          Questions? Contact us at{" "}
+          <a href="mailto:Amoslandhands@gmail.com" className="footer-email">
+            Amoslandhands@gmail.com
+          </a>
+        </p>
+        <p className="footer-tagline">
+          We can't wait to see you at the Enchanted Forest! 🍄✨
+        </p>
       </footer>
     </div>
   );
