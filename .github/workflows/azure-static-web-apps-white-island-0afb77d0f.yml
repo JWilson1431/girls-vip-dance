@@ -3,7 +3,7 @@ name: Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - master    # Your branch
+      - master
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
@@ -22,7 +22,22 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Make sure this matches your React app
+          node-version: '18'
 
       # 3️⃣ Install dependencies
-      - name: Ins
+      - name: Install Dependencies
+        run: npm install
+
+      # 4️⃣ Build React app
+      - name: Build App
+        run: npm run build
+
+      # 5️⃣ Deploy to Azure Static Web App
+      - name: Deploy to Azure
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WHITE_ISLAND_0AFB77D0F }}
+          action: "upload"
+          app_location: "/"           # Root of your React app
+          api_location: ""            # Leave empty if no API
+          output_location: "build"    # React production build folder
