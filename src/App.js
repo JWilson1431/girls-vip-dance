@@ -49,19 +49,16 @@ export default function DaddyDaughterDance() {
     setFormData({ ...formData, children: newChildren });
   };
 
-  //Submit button handling
   const handleSubmit = async () => {
     setLoading(true);
     setError('');
 
-    //Ensure child information is filled out
     if (formData.children.some(child => !child.name || !child.grade)) {
       setError('Please fill in all child names and grades');
       setLoading(false);
       return;
     }
 
-    //Ensure required fields are filled out
     if (!formData.vipGuest || !formData.email || !formData.phone || !formData.paymentMethod) {
       setError('Please fill in all required fields');
       setLoading(false);
@@ -74,8 +71,7 @@ export default function DaddyDaughterDance() {
     const grades = formData.children.map(c => c.grade).join(', ');
 
     try {
-      const googleSheetUrl = process.env.REACT_APP_GOOGLE_SHEET_URL;
-      await fetch(googleSheetUrl, {
+      await fetch('YOUR_GOOGLE_APPS_SCRIPT_URL', {
         method: 'POST',
         mode: 'no-cors',
         headers: {
@@ -94,12 +90,13 @@ export default function DaddyDaughterDance() {
         })
       });
 
-      await fetch('/api/register', {
+      const cosmosResponse = await fetch('YOUR_COSMOS_DB_API_URL', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          id: `registration-${Date.now()}`,
           timestamp,
           childNames,
           grades,
@@ -112,6 +109,10 @@ export default function DaddyDaughterDance() {
         })
       });
 
+      if (!cosmosResponse.ok) {
+        throw new Error('Cosmos DB submission failed');
+      }
+
       setSubmitted(true);
       setLoading(false);
     } catch (err) {
@@ -121,56 +122,38 @@ export default function DaddyDaughterDance() {
     }
   };
 
-  //Ticket price
   const ticketPrice = formData.children.length === 1 ? '$20' : '$25';
 
   return (
     <div className="app-container">
-      <div className="floating-elements">
-        <div className="float-item mushroom-1">🍄</div>
-        <div className="float-item sparkle-1">✨</div>
-        <div className="float-item mushroom-2">🍄</div>
-        <div className="float-item sparkle-2">✨</div>
-      </div>
+      
 
       <header className="hero-header">
         <div className="forest-background">
           <div className="gradient-overlay"></div>
           <div className="tree-layer"></div>
-          
-          <div className="flowers-layer">
-            <div className="flower flower-1">🌸</div>
-            <div className="flower flower-2">🌺</div>
-            <div className="flower flower-3">🌸</div>
-            <div className="flower flower-4">🌷</div>
-            <div className="flower flower-5">🌺</div>
-            <div className="flower flower-6">🌸</div>
-          </div>
+
           
           <div className="creatures-layer">
-            <div className="creature butterfly-1">🦋</div>
             <div className="creature butterfly-2">🦋</div>
-            <div className="creature fairy-1">🧚</div>
-            <div className="creature fairy-2">🧚</div>
             <div className="creature butterfly-3">🦋</div>
-          </div>
-          
-          <div className="mushrooms-layer">
-            <div className="mushroom mush-1">🍄</div>
-            <div className="mushroom mush-2">🍄</div>
-            <div className="mushroom mush-3">🍄</div>
           </div>
           
           <div className="river-effect"></div>
           <div className="light-ray ray-1"></div>
           <div className="light-ray ray-2"></div>
+          <div className="light-ray ray-3"></div>
           
           <div className="firefly firefly-1"></div>
           <div className="firefly firefly-2"></div>
           <div className="firefly firefly-3"></div>
+          <div className="firefly firefly-4"></div>
+          <div className="firefly firefly-5"></div>
+          <div className="firefly firefly-6"></div>
           
           <div className="glow-orb orb-1"></div>
           <div className="glow-orb orb-2"></div>
+          <div className="glow-orb orb-3"></div>
         </div>
 
         <div className="dark-overlay"></div>
@@ -197,19 +180,13 @@ export default function DaddyDaughterDance() {
                   ))}
                 </span>
               ))}
-              <span className="sparkle-end">✨</span>
+              <span className="sparkle-end">🍄</span>
             </h1>
           </div>
 
           <div className="hero-details">
-            <h2 className="event-date">February 20th, 2025 • 6:30 PM - 8:30 PM</h2>
+            <h2 className="event-date">February 20th, 2026 • 6:30 PM - 8:30 PM</h2>
             <p className="event-location">Amosland Elementary School</p>
-          </div>
-
-          <div className="scroll-indicator">
-            <div className="scroll-border">
-              <div className="scroll-dot"></div>
-            </div>
           </div>
         </div>
       </header>
@@ -340,7 +317,7 @@ export default function DaddyDaughterDance() {
               </div>
 
               <div className="form-group">
-                <label>VIP Guest Name *</label>
+                <label>VIP Guest Name (Dad, Grandpa, Uncle, etc.) *</label>
                 <input
                   type="text"
                   value={formData.vipGuest}
@@ -388,14 +365,15 @@ export default function DaddyDaughterDance() {
                 <p className="price-label">
                   Your Ticket Price: <span className="price-amount">{ticketPrice}</span>
                 </p>
+
                 <p className="price-note">
                   {formData.paymentMethod === "Cash" || formData.paymentMethod === "Check" ? (
                     <>
-                      Please send {formData.paymentMethod} to the teacher with your child's name, "VIP Dance" notation, and parent phone number.
+                      Please send {formData.paymentMethod.toLowerCase()} to the teacher with your child's name, "VIP Dance" notation, and parent phone number.
                     </>
                   ) : formData.paymentMethod === "Venmo" ? (
                     <>
-                      Please pay via <a href="https://venmo.com/Amosland-HomeandSchool" target="_blank" rel="noopener noreferrer">Venmo</a>.
+                      Please pay via <a href="https://venmo.com/AmoslandHomeandSchool" target="_blank" rel="noopener noreferrer">Venmo</a>.
                     </>
                   ) : (
                     "Please select a payment method."

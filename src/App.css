@@ -12,8 +12,29 @@ body {
 
 .app-container {
   min-height: 100vh;
-  background: linear-gradient(to bottom, #0f172a, #064e3b, #14532d);
+  background-image: url('/src/images/enhantedForest2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   color: white;
+  position: relative;
+}
+
+.app-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 0;
+}
+
+.app-container > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* Floating Elements */
@@ -97,37 +118,33 @@ body {
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .forest-background {
-  position: absolute;
+  position: fixed;
   inset: 0;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .gradient-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, 
-    rgba(49, 46, 129, 0.4),
-    rgba(6, 78, 59, 0.6),
-    rgba(20, 83, 45, 0.8)
-  );
+  /* Removed gradient - using just the background image */
 }
 
 .tree-layer {
   position: absolute;
   inset: 0;
-  background-image: 
-    radial-gradient(ellipse 400px 800px at 15% 0%, rgba(34, 139, 34, 0.4) 0%, transparent 50%),
-    radial-gradient(ellipse 350px 700px at 85% 0%, rgba(34, 139, 34, 0.35) 0%, transparent 50%),
-    radial-gradient(ellipse 300px 600px at 40% 0%, rgba(22, 101, 52, 0.3) 0%, transparent 50%),
-    radial-gradient(ellipse 320px 650px at 70% 0%, rgba(22, 101, 52, 0.3) 0%, transparent 50%);
+  /* Removed tree gradients - using just the background image */
 }
 
 .flowers-layer {
-  position: absolute;
+  position: fixed;
   inset: 0;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .flower {
@@ -177,8 +194,10 @@ body {
 }
 
 .creatures-layer {
-  position: absolute;
+  position: fixed;
   inset: 0;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .creature {
@@ -195,7 +214,7 @@ body {
 }
 
 .butterfly-2 {
-  top: 33%;
+  top: 10%;
   right: 25%;
   font-size: 2.5rem;
   opacity: 0.75;
@@ -231,8 +250,10 @@ body {
 }
 
 .mushrooms-layer {
-  position: absolute;
+  position: fixed;
   inset: 0;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .mushroom {
@@ -265,8 +286,8 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 12rem;
-  background: linear-gradient(to top, rgba(30, 58, 138, 0.4), rgba(21, 94, 117, 0.2), transparent);
+  height: 0;
+  /* Removed river effect */
 }
 
 .river-effect::after {
@@ -275,55 +296,119 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 8rem;
-  background: radial-gradient(ellipse at 50% 100%, rgba(59, 130, 246, 0.3) 0%, transparent 60%);
+  height: 0;
+  /* Removed river effect */
 }
 
 .light-ray {
   position: absolute;
   top: 0;
-  width: 1px;
+  width: 2px;
   height: 100%;
-  filter: blur(40px);
+  filter: blur(30px);
 }
 
 .ray-1 {
   right: 25%;
-  background: linear-gradient(to bottom, rgba(254, 249, 195, 0.3), rgba(254, 249, 195, 0.1), transparent);
-  transform: rotate(12deg);
+  background: linear-gradient(to bottom, rgba(255, 215, 0, 0.4), rgba(255, 215, 0, 0.15), transparent);
+  transform: rotate(8deg);
 }
 
 .ray-2 {
   right: 33%;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05), transparent);
-  transform: rotate(-12deg);
+  background: linear-gradient(to bottom, rgba(255, 223, 128, 0.3), rgba(255, 223, 128, 0.1), transparent);
+  transform: rotate(-8deg);
+}
+
+.ray-3 {
+  position: absolute;
+  top: 0;
+  left: 30%;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(255, 235, 150, 0.35), rgba(255, 235, 150, 0.12), transparent);
+  filter: blur(35px);
+  transform: rotate(5deg);
 }
 
 .firefly {
   position: absolute;
   width: 8px;
   height: 8px;
-  background: #fef08a;
+  background: #ffd700;
   border-radius: 50%;
-  filter: blur(2px);
-  animation: pulse 2s ease-in-out infinite;
+  filter: blur(3px);
+  box-shadow: 0 0 20px #ffd700, 0 0 40px #ffa500;
+  animation: firefly-glow 3s ease-in-out infinite;
+}
+
+@keyframes firefly-glow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.2);
+  }
 }
 
 .firefly-1 {
-  top: 25%;
-  left: 25%;
+  top: 20%;
+  left: 15%;
+  animation-delay: 0s;
 }
 
 .firefly-2 {
-  top: 33%;
-  right: 25%;
-  animation-delay: 1s;
+  top: 30%;
+  right: 20%;
+  animation-delay: 1.2s;
 }
 
 .firefly-3 {
-  top: 50%;
-  left: 33%;
-  animation-delay: 2s;
+  top: 40%;
+  left: 25%;
+  animation-delay: 2.4s;
+}
+
+/* Add more fireflies for the magical glow effect */
+.firefly-4 {
+  position: absolute;
+  top: 25%;
+  right: 30%;
+  width: 6px;
+  height: 6px;
+  background: #ffed4e;
+  border-radius: 50%;
+  filter: blur(2px);
+  box-shadow: 0 0 15px #ffd700;
+  animation: firefly-glow 4s ease-in-out infinite 0.8s;
+}
+
+.firefly-5 {
+  position: absolute;
+  top: 35%;
+  left: 40%;
+  width: 10px;
+  height: 10px;
+  background: #ffe066;
+  border-radius: 50%;
+  filter: blur(4px);
+  box-shadow: 0 0 25px #ffd700, 0 0 50px #ffa500;
+  animation: firefly-glow 3.5s ease-in-out infinite 1.5s;
+}
+
+.firefly-6 {
+  position: absolute;
+  top: 45%;
+  right: 35%;
+  width: 7px;
+  height: 7px;
+  background: #ffd700;
+  border-radius: 50%;
+  filter: blur(3px);
+  box-shadow: 0 0 18px #ffd700;
+  animation: firefly-glow 4.2s ease-in-out infinite 2s;
 }
 
 @keyframes pulse {
@@ -341,26 +426,41 @@ body {
   height: 24rem;
   border-radius: 50%;
   filter: blur(80px);
-  animation: pulse 3s ease-in-out infinite;
+  animation: pulse 4s ease-in-out infinite;
 }
 
 .orb-1 {
-  top: 33%;
-  left: 20%;
-  background: rgba(168, 85, 247, 0.15);
+  top: 35%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(102, 255, 204, 0.25);
 }
 
 .orb-2 {
   top: 50%;
-  right: 20%;
-  background: rgba(236, 72, 153, 0.15);
-  animation-delay: 1.5s;
+  right: 15%;
+  background: rgba(52, 211, 153, 0.2);
+  animation-delay: 2s;
+}
+
+.orb-3 {
+  position: absolute;
+  top: 40%;
+  left: 20%;
+  width: 20rem;
+  height: 20rem;
+  background: rgba(16, 185, 129, 0.15);
+  border-radius: 50%;
+  filter: blur(70px);
+  animation: pulse 5s ease-in-out infinite 1s;
 }
 
 .dark-overlay {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.25);
+  z-index: -1;
+  pointer-events: none;
 }
 
 .hero-content {
@@ -372,6 +472,7 @@ body {
 }
 
 .sparkle-icon {
+  display: none;
   margin-bottom: 2rem;
   color: #fde047;
   animation: pulse 2s ease-in-out infinite;
@@ -492,12 +593,12 @@ body {
 }
 
 .details-card {
-  background: rgba(6, 78, 59, 0.4);
+  background: rgba(6, 78, 59, 0.85);
   backdrop-filter: blur(12px);
   border-radius: 1.5rem;
   padding: 3rem;
-  border: 2px solid rgba(5, 150, 105, 0.3);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(5, 150, 105, 0.5);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
 }
 
 @media (min-width: 768px) {
@@ -614,12 +715,12 @@ body {
 }
 
 .registration-card {
-  background: rgba(6, 78, 59, 0.4);
+  background: rgba(6, 78, 59, 0.85);
   backdrop-filter: blur(12px);
   border-radius: 1.5rem;
   padding: 2rem;
-  border: 2px solid rgba(5, 150, 105, 0.3);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(5, 150, 105, 0.5);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
 }
 
 @media (min-width: 768px) {
