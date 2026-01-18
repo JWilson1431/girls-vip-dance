@@ -71,7 +71,8 @@ export default function DaddyDaughterDance() {
     const grades = formData.children.map(c => c.grade).join(', ');
 
     try {
-      await fetch('YOUR_GOOGLE_APPS_SCRIPT_URL', {
+      const googleSheetUrl = process.env.REACT_APP_GOOGLE_SHEET_URL;
+      await fetch(googleSheetUrl, {
         method: 'POST',
         mode: 'no-cors',
         headers: {
@@ -90,13 +91,12 @@ export default function DaddyDaughterDance() {
         })
       });
 
-      const cosmosResponse = await fetch('YOUR_COSMOS_DB_API_URL', {
+      await fetch('/api/register', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          id: `registration-${Date.now()}`,
           timestamp,
           childNames,
           grades,
@@ -108,10 +108,6 @@ export default function DaddyDaughterDance() {
           songRequest: formData.songRequest
         })
       });
-
-      if (!cosmosResponse.ok) {
-        throw new Error('Cosmos DB submission failed');
-      }
 
       setSubmitted(true);
       setLoading(false);
@@ -266,9 +262,8 @@ export default function DaddyDaughterDance() {
               <Sparkles className="success-icon" size={64} />
               <h3>Registration Complete! 🎉</h3>
               <p>Thank you for registering! We can't wait to see you at the Enchanted Forest dance.</p>
-              <p className="small-text">You should receive a confirmation email shortly.</p>
               <p className="ticket-price-display">Your ticket price: {ticketPrice}</p>
-              <p className="small-text">Please bring payment on the day of the event</p>
+              <p className="small-text">If you have not yet submitted payment, please do so now.</p>
             </div>
           ) : (
             <div className="registration-form">
