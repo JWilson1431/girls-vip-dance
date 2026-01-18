@@ -373,7 +373,7 @@ export default function DaddyDaughterDance() {
                     </>
                   ) : formData.paymentMethod === "Venmo" ? (
                     <>
-                      Please pay via <a href="https://venmo.com/AmoslandHomeandSchool" target="_blank" rel="noopener noreferrer">Venmo</a>.
+                      Please pay via <a href="https://venmo.com/Amosland-HomeandSchool" target="_blank" rel="noopener noreferrer">Venmo</a>.
                     </>
                   ) : (
                     "Please select a payment method."
