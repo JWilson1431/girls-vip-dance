@@ -194,7 +194,7 @@ export default function DaddyDaughterDance() {
               <Calendar className="detail-icon" size={32} />
               <div>
                 <h3>Date & Time</h3>
-                <p>Thursday, February 20th, 2025</p>
+                <p>Friday, February 20th, 2026</p>
                 <p>6:30 PM - 8:30 PM</p>
               </div>
             </div>
@@ -222,7 +222,7 @@ export default function DaddyDaughterDance() {
               <Clock className="detail-icon" size={32} />
               <div>
                 <h3>Registration Deadline</h3>
-                <p className="deadline">February 13th, 2025</p>
+                <p className="deadline">February 13th, 2026</p>
               </div>
             </div>
           </div>
