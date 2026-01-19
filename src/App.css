@@ -945,6 +945,18 @@ body {
   color: #fecaca;
 }
 
+.venmo-link {
+  color: #3d95ce;    
+  font-weight: bold; 
+  text-decoration: underline;
+}
+
+.venmo-link:hover {
+  color: #1a5d8f;  
+  cursor: pointer;          
+}
+
+
 .submit-btn {
   width: 100%;
   padding: 1rem;

@@ -246,7 +246,7 @@ export default function DaddyDaughterDance() {
               <div className="feature">
                 <Cake className="feature-icon" size={48} />
                 <h4>Refreshments</h4>
-                <p>Cupcakes, pretzels, and drinks</p>
+                <p>Light refreshments provided</p>
               </div>
             </div>
           </div>
@@ -258,14 +258,39 @@ export default function DaddyDaughterDance() {
           <h2 className="registration-title">Register for the Dance</h2>
 
           {submitted ? (
-            <div className="success-message">
-              <Sparkles className="success-icon" size={64} />
-              <h3>Registration Complete! 🎉</h3>
-              <p>Thank you for registering! We can't wait to see you at the Enchanted Forest dance.</p>
-              <p className="ticket-price-display">Your ticket price: {ticketPrice}</p>
-              <p className="small-text">If you have not yet submitted payment, please do so now.</p>
-            </div>
-          ) : (
+  <div className="success-message">
+    <Sparkles className="success-icon" size={64} />
+    <h3>Registration Complete! 🎉</h3>
+    <p>Thank you for registering! We can't wait to see you at the Enchanted Forest dance.</p>
+    <p className="ticket-price-display">Your ticket price: {ticketPrice}</p>
+
+    {/* Dynamic payment reminder */}
+    {formData.paymentMethod === "Cash" || formData.paymentMethod === "Check" ? (
+        <p className="payment-reminder">
+          Please remember to send {formData.paymentMethod.toLowerCase()} with your child to school, labeled with your child's name, "VIP Dance" notation, and parent phone number.
+        </p>
+      ) : formData.paymentMethod === "Venmo" ? (
+        <p className="payment-reminder">
+          If you have not already done so, please complete your payment via{" "}
+          <a
+            href="https://venmo.com/Amosland-HomeandSchool"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="venmo-link"
+          >
+            Venmo (@Amosland-HomeandSchool)
+          </a>
+          .
+        </p>
+      ) : (
+        <p className="payment-reminder">
+          You have not selected a payment method yet. Please submit your payment.
+        </p>
+      )}
+
+      <p className="small-text">Once payment is received, your registration is fully complete.</p>
+    </div>
+  ) : (
             <div className="registration-form">
               <div className="form-group">
                 <label>Child/Children Attending *</label>
@@ -368,7 +393,16 @@ export default function DaddyDaughterDance() {
                     </>
                   ) : formData.paymentMethod === "Venmo" ? (
                     <>
-                      Please pay via <a href="https://venmo.com/Amosland-HomeandSchool" target="_blank" rel="noopener noreferrer">Venmo</a>.
+                      Please pay via{" "}
+                      <a
+                        href="https://venmo.com/Amosland-HomeandSchool"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="venmo-link"
+                      >
+                        Venmo (@Amosland-HomeandSchool)
+                      </a>
+                      .
                     </>
                   ) : (
                     "Please select a payment method."
