@@ -231,6 +231,7 @@ export default function DaddyDaughterDance() {
             <h3 className="section-title">
               <Sparkles className="title-icon" size={24} />
               What to Expect
+              <Sparkles className="title-icon" size={24} />
             </h3>
             <div className="features-grid">
               <div className="feature">
