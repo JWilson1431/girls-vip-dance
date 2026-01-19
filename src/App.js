@@ -16,7 +16,7 @@ export default function DaddyDaughterDance() {
   const [error, setError] = useState('');
   const [animatedText, setAnimatedText] = useState('');
   
-  const fullText = "Welcome to the Enchanted Girls VIP Dance";
+  const fullText = "Welcome to the Enchanted Forest Girls VIP Dance";
   
   React.useEffect(() => {
     let index = 0;
