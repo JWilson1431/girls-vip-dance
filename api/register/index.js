@@ -1,11 +1,28 @@
 const { CosmosClient } = require("@azure/cosmos");
 
 module.exports = async function (context, req) {
+  // Handle preflight OPTIONS request
+  if (req.method === "OPTIONS") {
+    context.res = {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type"
+      }
+    };
+    return;
+  }
+
   try {
     // Basic validation
     if (!req.body || !req.body.email) {
       context.res = {
         status: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json"
+        },
         body: { error: "Invalid request body" }
       };
       return;
@@ -31,6 +48,10 @@ module.exports = async function (context, req) {
 
     context.res = {
       status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json"
+      },
       body: { success: true }
     };
 
@@ -39,7 +60,11 @@ module.exports = async function (context, req) {
 
     context.res = {
       status: 500,
-      body: { error: "Server error" }
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json"
+      },
+      body: { error: "Server error", details: error.message }
     };
   }
 };
