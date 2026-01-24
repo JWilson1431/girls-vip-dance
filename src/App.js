@@ -481,8 +481,8 @@ export default function DaddyDaughterDance() {
                   <p>
                     <strong>Important:</strong> We are collecting ONE song
                     request per family ahead of time. Song requests will NOT be
-                    accepted during the dance. Please choose your favorite song
-                    now!
+                    accepted during the dance. Song requests will be chosen at random 
+                    and not all requests will be played during the dance.
                   </p>
                 </div>
                 <input
