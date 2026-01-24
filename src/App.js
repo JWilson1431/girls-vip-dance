@@ -310,7 +310,7 @@ export default function DaddyDaughterDance() {
                     rel="noopener noreferrer"
                     className="venmo-link"
                   >
-                    Venmo (@Amosland-HomeandSchool)
+                    Venmo (@Amosland-HomeandSchool). Please include childs name and Girls VIP Dance in Venmo comments.
                   </a>
                   .
                 </p>
@@ -389,7 +389,7 @@ export default function DaddyDaughterDance() {
               </div>
 
               <div className="form-group">
-                <label>VIP Guest Name (Dad, Grandpa, Uncle, etc.) *</label>
+                <label>VIP Guest Name *</label>
                 <input
                   type="text"
                   value={formData.vipGuest}
@@ -464,7 +464,7 @@ export default function DaddyDaughterDance() {
                         rel="noopener noreferrer"
                         className="venmo-link"
                       >
-                        Venmo (@Amosland-HomeandSchool)
+                        Venmo (@Amosland-HomeandSchool). Include childs name and Girls VIP Dance in Venmo Comments.
                       </a>
                       .
                     </>
