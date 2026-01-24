@@ -798,19 +798,22 @@ body {
 
 .child-inputs {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 767px) {
   .child-inputs {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
 .grade-remove {
+  grid-column: 1 / -1;
   display: flex;
   gap: 0.5rem;
 }
+
 
 .form-input,
 .form-select {

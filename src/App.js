@@ -13,7 +13,7 @@ import {
 
 export default function DaddyDaughterDance() {
   const [formData, setFormData] = useState({
-    children: [{ name: "", grade: "" }],
+    children: [{ firstName: "", lastName: "", grade: "" }],
     vipGuest: "",
     email: "",
     phone: "",
@@ -49,7 +49,7 @@ export default function DaddyDaughterDance() {
   const addChild = () => {
     setFormData({
       ...formData,
-      children: [...formData.children, { name: "", grade: "" }],
+      children: [...formData.children, { firstName: "", lastName: "", grade: "" }],
     });
   };
 
@@ -62,8 +62,8 @@ export default function DaddyDaughterDance() {
     setLoading(true);
     setError("");
 
-    if (formData.children.some((child) => !child.name || !child.grade)) {
-      setError("Please fill in all child names and grades");
+    if (formData.children.some((child) => !child.firstName || !child.lastName || !child.grade)) {
+      setError("Please fill in all child first names, last names, and grades");
       setLoading(false);
       return;
     }
@@ -81,7 +81,7 @@ export default function DaddyDaughterDance() {
 
     const timestamp = new Date().toISOString();
     const numberOfParticipants = formData.children.length;
-    const childNames = formData.children.map((c) => c.name).join(", ");
+    const childNames = formData.children.map((c) => `${c.firstName} ${c.lastName}`).join(", ");
     const grades = formData.children.map((c) => c.grade).join(", ");
 
     try {
@@ -293,7 +293,6 @@ export default function DaddyDaughterDance() {
                 Your ticket price: {ticketPrice}
               </p>
 
-              {/* Dynamic payment reminder */}
               {formData.paymentMethod === "Cash" ||
               formData.paymentMethod === "Check" ? (
                 <p className="payment-reminder">
@@ -335,10 +334,19 @@ export default function DaddyDaughterDance() {
                     <div className="child-inputs">
                       <input
                         type="text"
-                        placeholder="Child's Name"
-                        value={child.name}
+                        placeholder="First Name"
+                        value={child.firstName}
                         onChange={(e) =>
-                          handleChildChange(index, "name", e.target.value)
+                          handleChildChange(index, "firstName", e.target.value)
+                        }
+                        className="form-input"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Last Name"
+                        value={child.lastName}
+                        onChange={(e) =>
+                          handleChildChange(index, "lastName", e.target.value)
                         }
                         className="form-input"
                       />
