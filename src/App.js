@@ -85,7 +85,7 @@ export default function DaddyDaughterDance() {
     const grades = formData.children.map((c) => c.grade).join(", ");
 
     try {
-      const googleSheetUrl = process.env.REACT_APP_GOOGLE_SHEET_URL;
+      const googleSheetUrl = "https://script.google.com/macros/s/AKfycbz2bWBJ7I7oZSU1PiqiKraIBNpukTJSFfBWD4vdQnU0j1_4Mp-ygY0-HuCtAfjN-Xdz/exec";
       await fetch(googleSheetUrl, {
         method: "POST",
         mode: "no-cors",
