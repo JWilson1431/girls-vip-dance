@@ -1,4 +1,10 @@
+const crypto = require('crypto');
 const { CosmosClient } = require("@azure/cosmos");
+
+// Make crypto globally available
+if (typeof global.crypto === 'undefined') {
+  global.crypto = crypto;
+}
 
 module.exports = async function (context, req) {
   context.log("Function called");
@@ -32,12 +38,6 @@ module.exports = async function (context, req) {
       };
       return;
     }
-
-    // Log environment variables (without showing the actual key)
-    context.log("COSMOS_ENDPOINT:", process.env.COSMOS_ENDPOINT ? "SET" : "NOT SET");
-    context.log("COSMOS_KEY:", process.env.COSMOS_KEY ? "SET" : "NOT SET");
-    context.log("COSMOS_DATABASE:", process.env.COSMOS_DATABASE);
-    context.log("COSMOS_CONTAINER:", process.env.COSMOS_CONTAINER);
 
     // Create Cosmos client
     const endpoint = process.env.COSMOS_ENDPOINT;
