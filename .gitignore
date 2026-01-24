@@ -2,6 +2,7 @@
 
 # Azure Functions
 /api/.env.local
+/api/local.settings.json
 
 # dependencies
 /node_modules

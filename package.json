@@ -1,6 +1,7 @@
 {
   "name": "girls-vip-dance",
   "version": "0.1.0",
+  "proxy": "http://localhost:7071",
   "private": true,
   "dependencies": {
     "@azure/cosmos": "^4.9.0",

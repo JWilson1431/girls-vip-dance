@@ -1,23 +1,32 @@
-import './App.css';
-import React, { useState } from 'react';
-import { Sparkles, Calendar, MapPin, Music, Camera, Cake, Clock, DollarSign } from 'lucide-react';
+import "./App.css";
+import React, { useState } from "react";
+import {
+  Sparkles,
+  Calendar,
+  MapPin,
+  Music,
+  Camera,
+  Cake,
+  Clock,
+  DollarSign,
+} from "lucide-react";
 
 export default function DaddyDaughterDance() {
   const [formData, setFormData] = useState({
-    children: [{ name: '', grade: '' }],
-    vipGuest: '',
-    email: '',
-    phone: '',
-    paymentMethod: '',
-    songRequest: ''
+    children: [{ name: "", grade: "" }],
+    vipGuest: "",
+    email: "",
+    phone: "",
+    paymentMethod: "",
+    songRequest: "",
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [animatedText, setAnimatedText] = useState('');
-  
+  const [error, setError] = useState("");
+  const [animatedText, setAnimatedText] = useState("");
+
   const fullText = "Welcome to the Enchanted Forest Girls VIP Dance";
-  
+
   React.useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
@@ -40,7 +49,7 @@ export default function DaddyDaughterDance() {
   const addChild = () => {
     setFormData({
       ...formData,
-      children: [...formData.children, { name: '', grade: '' }]
+      children: [...formData.children, { name: "", grade: "" }],
     });
   };
 
@@ -51,32 +60,37 @@ export default function DaddyDaughterDance() {
 
   const handleSubmit = async () => {
     setLoading(true);
-    setError('');
+    setError("");
 
-    if (formData.children.some(child => !child.name || !child.grade)) {
-      setError('Please fill in all child names and grades');
+    if (formData.children.some((child) => !child.name || !child.grade)) {
+      setError("Please fill in all child names and grades");
       setLoading(false);
       return;
     }
 
-    if (!formData.vipGuest || !formData.email || !formData.phone || !formData.paymentMethod) {
-      setError('Please fill in all required fields');
+    if (
+      !formData.vipGuest ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.paymentMethod
+    ) {
+      setError("Please fill in all required fields");
       setLoading(false);
       return;
     }
 
     const timestamp = new Date().toISOString();
     const numberOfParticipants = formData.children.length;
-    const childNames = formData.children.map(c => c.name).join(', ');
-    const grades = formData.children.map(c => c.grade).join(', ');
+    const childNames = formData.children.map((c) => c.name).join(", ");
+    const grades = formData.children.map((c) => c.grade).join(", ");
 
     try {
       const googleSheetUrl = process.env.REACT_APP_GOOGLE_SHEET_URL;
       await fetch(googleSheetUrl, {
-        method: 'POST',
-        mode: 'no-cors',
+        method: "POST",
+        mode: "no-cors",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           timestamp,
@@ -87,14 +101,14 @@ export default function DaddyDaughterDance() {
           phone: formData.phone,
           numberOfParticipants,
           paymentMethod: formData.paymentMethod,
-          songRequest: formData.songRequest
-        })
+          songRequest: formData.songRequest,
+        }),
       });
 
-      await fetch('/api/register', {
-        method: 'POST',
+      const cosmosResponse = await fetch("/api/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           timestamp,
@@ -105,48 +119,55 @@ export default function DaddyDaughterDance() {
           phone: formData.phone,
           numberOfParticipants,
           paymentMethod: formData.paymentMethod,
-          songRequest: formData.songRequest
-        })
+          songRequest: formData.songRequest,
+        }),
       });
+
+      const cosmosData = await cosmosResponse.json();
+      console.log("Cosmos response:", cosmosData);
+
+      if (!cosmosResponse.ok) {
+        console.error("Cosmos error details:", cosmosData);
+        throw new Error(cosmosData.details || "Cosmos DB submission failed");
+      }
 
       setSubmitted(true);
       setLoading(false);
     } catch (err) {
-      setError('There was an error submitting your registration. Please try again or contact us directly.');
+      setError(
+        "There was an error submitting your registration. Please try again or contact us directly.",
+      );
       setLoading(false);
-      console.error('Submission error:', err);
+      console.error("Submission error:", err);
     }
   };
 
-  const ticketPrice = formData.children.length === 1 ? '$20' : '$25';
+  const ticketPrice = formData.children.length === 1 ? "$20" : "$25";
 
   return (
     <div className="app-container">
-      
-
       <header className="hero-header">
         <div className="forest-background">
           <div className="gradient-overlay"></div>
           <div className="tree-layer"></div>
 
-          
           <div className="creatures-layer">
             <div className="creature butterfly-2">🦋</div>
             <div className="creature butterfly-3">🦋</div>
           </div>
-          
+
           <div className="river-effect"></div>
           <div className="light-ray ray-1"></div>
           <div className="light-ray ray-2"></div>
           <div className="light-ray ray-3"></div>
-          
+
           <div className="firefly firefly-1"></div>
           <div className="firefly firefly-2"></div>
           <div className="firefly firefly-3"></div>
           <div className="firefly firefly-4"></div>
           <div className="firefly firefly-5"></div>
           <div className="firefly firefly-6"></div>
-          
+
           <div className="glow-orb orb-1"></div>
           <div className="glow-orb orb-2"></div>
           <div className="glow-orb orb-3"></div>
@@ -158,17 +179,17 @@ export default function DaddyDaughterDance() {
           <div className="sparkle-icon">
             <Sparkles size={80} />
           </div>
-          
+
           <div className="title-container">
             <h1 className="animated-title">
-              {animatedText.split(' ').map((word, i) => (
+              {animatedText.split(" ").map((word, i) => (
                 <span key={i} className="word">
-                  {word.split('').map((letter, j) => (
+                  {word.split("").map((letter, j) => (
                     <span
                       key={j}
                       className="letter"
                       style={{
-                        animationDelay: `${(i * 5 + j) * 0.08}s`
+                        animationDelay: `${(i * 5 + j) * 0.08}s`,
                       }}
                     >
                       {letter}
@@ -181,7 +202,9 @@ export default function DaddyDaughterDance() {
           </div>
 
           <div className="hero-details">
-            <h2 className="event-date">February 20th, 2026 • 6:30 PM - 8:30 PM</h2>
+            <h2 className="event-date">
+              February 20th, 2026 • 6:30 PM - 8:30 PM
+            </h2>
             <p className="event-location">Amosland Elementary School</p>
           </div>
         </div>
@@ -259,39 +282,51 @@ export default function DaddyDaughterDance() {
           <h2 className="registration-title">Register for the Dance</h2>
 
           {submitted ? (
-  <div className="success-message">
-    <Sparkles className="success-icon" size={64} />
-    <h3>Registration Complete! 🎉</h3>
-    <p>Thank you for registering! We can't wait to see you at the Enchanted Forest dance.</p>
-    <p className="ticket-price-display">Your ticket price: {ticketPrice}</p>
+            <div className="success-message">
+              <Sparkles className="success-icon" size={64} />
+              <h3>Registration Complete! 🎉</h3>
+              <p>
+                Thank you for registering! We can't wait to see you at the
+                Enchanted Forest dance.
+              </p>
+              <p className="ticket-price-display">
+                Your ticket price: {ticketPrice}
+              </p>
 
-    {/* Dynamic payment reminder */}
-    {formData.paymentMethod === "Cash" || formData.paymentMethod === "Check" ? (
-        <p className="payment-reminder">
-          Please remember to send {formData.paymentMethod.toLowerCase()} with your child to school, labeled with your child's name, "VIP Dance" notation, and parent phone number.
-        </p>
-      ) : formData.paymentMethod === "Venmo" ? (
-        <p className="payment-reminder">
-          If you have not already done so, please complete your payment via{" "}
-          <a
-            href="https://venmo.com/Amosland-HomeandSchool"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="venmo-link"
-          >
-            Venmo (@Amosland-HomeandSchool)
-          </a>
-          .
-        </p>
-      ) : (
-        <p className="payment-reminder">
-          You have not selected a payment method yet. Please submit your payment.
-        </p>
-      )}
+              {/* Dynamic payment reminder */}
+              {formData.paymentMethod === "Cash" ||
+              formData.paymentMethod === "Check" ? (
+                <p className="payment-reminder">
+                  Please remember to send {formData.paymentMethod.toLowerCase()}{" "}
+                  with your child to school, labeled with your child's name,
+                  "VIP Dance" notation, and parent phone number.
+                </p>
+              ) : formData.paymentMethod === "Venmo" ? (
+                <p className="payment-reminder">
+                  If you have not already done so, please complete your payment
+                  via{" "}
+                  <a
+                    href="https://venmo.com/Amosland-HomeandSchool"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="venmo-link"
+                  >
+                    Venmo (@Amosland-HomeandSchool)
+                  </a>
+                  .
+                </p>
+              ) : (
+                <p className="payment-reminder">
+                  You have not selected a payment method yet. Please submit your
+                  payment.
+                </p>
+              )}
 
-      <p className="small-text">Once payment is received, your registration is fully complete.</p>
-    </div>
-  ) : (
+              <p className="small-text">
+                Once payment is received, your registration is fully complete.
+              </p>
+            </div>
+          ) : (
             <div className="registration-form">
               <div className="form-group">
                 <label>Child/Children Attending *</label>
@@ -302,13 +337,17 @@ export default function DaddyDaughterDance() {
                         type="text"
                         placeholder="Child's Name"
                         value={child.name}
-                        onChange={(e) => handleChildChange(index, 'name', e.target.value)}
+                        onChange={(e) =>
+                          handleChildChange(index, "name", e.target.value)
+                        }
                         className="form-input"
                       />
                       <div className="grade-remove">
                         <select
                           value={child.grade}
-                          onChange={(e) => handleChildChange(index, 'grade', e.target.value)}
+                          onChange={(e) =>
+                            handleChildChange(index, "grade", e.target.value)
+                          }
                           className="form-select"
                         >
                           <option value="">Select Grade</option>
@@ -332,7 +371,11 @@ export default function DaddyDaughterDance() {
                     </div>
                   </div>
                 ))}
-                <button type="button" onClick={addChild} className="add-child-btn">
+                <button
+                  type="button"
+                  onClick={addChild}
+                  className="add-child-btn"
+                >
                   + Add Another Child
                 </button>
               </div>
@@ -342,7 +385,9 @@ export default function DaddyDaughterDance() {
                 <input
                   type="text"
                   value={formData.vipGuest}
-                  onChange={(e) => setFormData({ ...formData, vipGuest: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, vipGuest: e.target.value })
+                  }
                   className="form-input"
                 />
               </div>
@@ -353,7 +398,9 @@ export default function DaddyDaughterDance() {
                   <input
                     type="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                     className="form-input"
                   />
                 </div>
@@ -362,7 +409,9 @@ export default function DaddyDaughterDance() {
                   <input
                     type="tel"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, phone: e.target.value })
+                    }
                     className="form-input"
                   />
                 </div>
@@ -372,7 +421,9 @@ export default function DaddyDaughterDance() {
                 <label>Payment Method *</label>
                 <select
                   value={formData.paymentMethod}
-                  onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, paymentMethod: e.target.value })
+                  }
                   className="form-select"
                 >
                   <option value="">Select Payment Method</option>
@@ -384,13 +435,17 @@ export default function DaddyDaughterDance() {
 
               <div className="price-display">
                 <p className="price-label">
-                  Your Ticket Price: <span className="price-amount">{ticketPrice}</span>
+                  Your Ticket Price:{" "}
+                  <span className="price-amount">{ticketPrice}</span>
                 </p>
 
                 <p className="price-note">
-                  {formData.paymentMethod === "Cash" || formData.paymentMethod === "Check" ? (
+                  {formData.paymentMethod === "Cash" ||
+                  formData.paymentMethod === "Check" ? (
                     <>
-                      Please send {formData.paymentMethod.toLowerCase()} to the teacher with your child's name, "VIP Dance" notation, and parent phone number.
+                      Please send {formData.paymentMethod.toLowerCase()} to the
+                      teacher with your child's name, "VIP Dance" notation, and
+                      parent phone number.
                     </>
                   ) : formData.paymentMethod === "Venmo" ? (
                     <>
@@ -416,31 +471,31 @@ export default function DaddyDaughterDance() {
                 <div className="song-notice">
                   <Music className="notice-icon" size={16} />
                   <p>
-                    <strong>Important:</strong> We are collecting ONE song request per family ahead of time. 
-                    Song requests will NOT be accepted during the dance. Please choose your favorite song now!
+                    <strong>Important:</strong> We are collecting ONE song
+                    request per family ahead of time. Song requests will NOT be
+                    accepted during the dance. Please choose your favorite song
+                    now!
                   </p>
                 </div>
                 <input
                   type="text"
                   value={formData.songRequest}
-                  onChange={(e) => setFormData({ ...formData, songRequest: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, songRequest: e.target.value })
+                  }
                   placeholder="Your favorite song for the DJ"
                   className="form-input"
                 />
               </div>
 
-              {error && (
-                <div className="error-message">
-                  {error}
-                </div>
-              )}
+              {error && <div className="error-message">{error}</div>}
 
               <button
                 onClick={handleSubmit}
                 disabled={loading}
                 className="submit-btn"
               >
-                {loading ? 'Submitting...' : 'Register Now ✨'}
+                {loading ? "Submitting..." : "Register Now ✨"}
               </button>
             </div>
           )}
