@@ -203,7 +203,7 @@ export default function DaddyDaughterDance() {
 
           <div className="hero-details">
             <h2 className="event-date">
-              February 20th, 2026 • 6:30 PM - 8:30 PM
+              February 20th, 2026 • 6:00 PM - 8:00 PM
             </h2>
             <p className="event-location">Amosland Elementary School</p>
           </div>
@@ -218,7 +218,7 @@ export default function DaddyDaughterDance() {
               <div>
                 <h3>Date & Time</h3>
                 <p>Friday, February 20th, 2026</p>
-                <p>6:30 PM - 8:30 PM</p>
+                <p>6:00 PM - 8:00 PM</p>
               </div>
             </div>
 
